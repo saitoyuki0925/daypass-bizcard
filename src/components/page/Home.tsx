@@ -40,34 +40,36 @@ export const Home = () => {
   }, [isSubmitSuccessful]);
 
   return (
-    <Box as="form" p={4} width={'90%'} mx="auto" pt={10} onSubmit={handleSubmit(onSubmit)}>
-      <Card.Root>
-        <Card.Header>
-          <Card.Title data-testid="home-title">デジタル名刺アプリ</Card.Title>
-        </Card.Header>
-        <Card.Body>
-          <Field.Root>
-            <Field.Label htmlFor="userId">ID</Field.Label>
-            <Input
-              id="userId"
-              {...register('userId', {
-                // idは英語文字列だけ入力できるようにバリデーションを追加
-                required: 'ユーザーIDは必須です',
-              })}
-              placeholder="ユーザーIDを入力してください"
-            />
-          </Field.Root>
-          {errors.userId && (
-            <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
-              {errors.userId.message}
-            </Text>
-          )}
+    <>
+      <Box as="form" p={4} width={'90%'} mx="auto" pt={10} onSubmit={handleSubmit(onSubmit)}>
+        <Card.Root>
+          <Card.Header>
+            <Card.Title data-testid="home-title">デジタル名刺アプリ</Card.Title>
+          </Card.Header>
+          <Card.Body>
+            <Field.Root>
+              <Field.Label htmlFor="userId">ID</Field.Label>
+              <Input
+                id="userId"
+                {...register('userId', {
+                  // idは英語文字列だけ入力できるようにバリデーションを追加
+                  required: 'ユーザーIDは必須です',
+                })}
+                placeholder="ユーザーIDを入力してください"
+              />
+            </Field.Root>
+            {errors.userId && (
+              <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                {errors.userId.message}
+              </Text>
+            )}
 
-          <Button mt={4} colorScheme="blue" type="submit">
-            名刺を検索
-          </Button>
-        </Card.Body>
-      </Card.Root>
-    </Box>
+            <Button mt={4} colorScheme="blue" type="submit">
+              名刺を検索
+            </Button>
+          </Card.Body>
+        </Card.Root>
+      </Box>
+    </>
   );
 };

@@ -18,7 +18,6 @@ export const CardPage = () => {
       (async () => {
         const res = await getUserById(id || '');
         setUser(res.data ?? null); // 取得したデータをstateにセット
-        console.log(res);
       })();
     }
   }, [id]);
@@ -34,13 +33,13 @@ export const CardPage = () => {
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <Text data-testid="card-loading">Loading...</Text>
       ) : (
         <>
           <Box width={'80%'} mx="auto" pt={10}>
             <Card.Root>
               <Card.Header>
-                <Card.Title data-testid="card-title">{user?.name}</Card.Title>
+                <Card.Title data-testid="card-name">{user?.name}</Card.Title>
               </Card.Header>
               <Card.Body>
                 <Box as="dl">
@@ -50,26 +49,29 @@ export const CardPage = () => {
                     dangerouslySetInnerHTML={{
                       __html: user?.description || '',
                     }}
+                    data-testid="card-profile"
                   ></Text>
                 </Box>
                 <Box as="dl" mt={4}>
                   <Text as="dt">好きな技術</Text>
-                  <Text as="dd">{user?.user_skill?.map((skill) => skill?.skills?.name).join(', ')}</Text>
+                  <Text as="dd" data-testid="card-skills">
+                    {user?.user_skill?.map((skill) => skill?.skills?.name).join(', ')}
+                  </Text>
                 </Box>
                 <Flex gap={4} mt={4} justify="space-around">
                   <Text>
                     <Link href={user?.github_id || '#'} target="_blank" background="black" color="white" p={1}>
-                      <LuGithub size="30" />
+                      <LuGithub size="30" data-testid="github-icon" />
                     </Link>
                   </Text>
                   <Text>
                     <Link href={user?.qiita_id || '#'} target="_blank" background="black" color="white" p={1}>
-                      <LuNotebook size="30" />
+                      <LuNotebook size="30" data-testid="qiita-icon" />
                     </Link>
                   </Text>
                   <Text>
                     <Link href={user?.x_id || '#'} target="_blank" background="black" color="white" p={1}>
-                      <LuX size="30" />
+                      <LuX size="30" data-testid="x-icon" />
                     </Link>
                   </Text>
                 </Flex>
@@ -78,7 +80,7 @@ export const CardPage = () => {
             </Card.Root>
           </Box>
           <Box textAlign="center">
-            <Link as="a" href="/" mt={4} colorScheme="blue">
+            <Link as="a" href="/" mt={4} colorScheme="blue" data-testid="card-back-button">
               戻る
             </Link>
           </Box>
