@@ -129,13 +129,14 @@ export const Register = memo(() => {
       <Box as={'form'} onSubmit={handleSubmit(onSubmit)} mt={5}>
         <Card.Root>
           <Card.Header>
-            <Card.Title>登録情報を入力してください。</Card.Title>
+            <Card.Title data-testid="register-title">登録情報を入力してください。</Card.Title>
           </Card.Header>
           <Card.Body>
             <Stack spaceY={4}>
               <Field.Root>
                 <Field.Label htmlFor="userId">ユーザーID</Field.Label>
                 <Input
+                  data-testid="register-userId"
                   id="userId"
                   {...register('userId', {
                     // idは英語文字列だけ入力できるようにバリデーションを追加
@@ -147,7 +148,7 @@ export const Register = memo(() => {
                   })}
                 />
                 {errors.userId && (
-                  <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                  <Text role="alert" aria-live="polite" data-testid="register-error-userId" style={{ color: 'red' }} textStyle="sm">
                     {errors.userId.message}
                   </Text>
                 )}
@@ -155,9 +156,9 @@ export const Register = memo(() => {
 
               <Field.Root>
                 <Field.Label htmlFor="name">お名前</Field.Label>
-                <Input id="name" {...register('name', { required: 'お名前は必須です' })} />
+                <Input data-testid="register-name" id="name" {...register('name', { required: 'お名前は必須です' })} />
                 {errors.name && (
-                  <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                  <Text role="alert" aria-live="polite" data-testid="register-error-name" style={{ color: 'red' }} textStyle="sm">
                     {errors.name.message}
                   </Text>
                 )}
@@ -165,9 +166,9 @@ export const Register = memo(() => {
 
               <Field.Root>
                 <Field.Label htmlFor="description">自己紹介</Field.Label>
-                <Textarea id="description" {...register('description', { required: '自己紹介は必須です' })} />
+                <Textarea id="description" data-testid="register-description" {...register('description', { required: '自己紹介は必須です' })} />
                 {errors.description && (
-                  <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                  <Text role="alert" aria-live="polite" data-testid="register-error-description" style={{ color: 'red' }} textStyle="sm">
                     {errors.description.message}
                   </Text>
                 )}
@@ -175,7 +176,7 @@ export const Register = memo(() => {
 
               <Field.Root>
                 <Select.Root collection={skillsOptions} multiple={true} {...register('skills', { required: 'スキルは必須です' })}>
-                  <Select.HiddenSelect />
+                  <Select.HiddenSelect data-testid="register-select" />
                   <Select.Label htmlFor="skills">スキル</Select.Label>
                   <Select.Control>
                     <Select.Trigger>
@@ -199,34 +200,34 @@ export const Register = memo(() => {
                   </Portal>
                 </Select.Root>
                 {errors.skills && (
-                  <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                  <Text role="alert" aria-live="polite" data-testid="register-error-select" style={{ color: 'red' }} textStyle="sm">
                     {errors.skills.message}
                   </Text>
                 )}
               </Field.Root>
               <Field.Root>
                 <Field.Label htmlFor="githubId">GitHub ID</Field.Label>
-                <Input id="githubId" {...register('githubId', { required: 'GitHub IDは必須です' })} />
+                <Input data-testid="register-githubId" id="githubId" {...register('githubId', { required: 'GitHub IDは必須です' })} />
                 {errors.githubId && (
-                  <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                  <Text role="alert" aria-live="polite" data-testid="register-error-githubId" style={{ color: 'red' }} textStyle="sm">
                     {errors.githubId.message}
                   </Text>
                 )}
               </Field.Root>
               <Field.Root>
                 <Field.Label htmlFor="qiitaId">Qiita ID</Field.Label>
-                <Input id="qiitaId" {...register('qiitaId', { required: 'Qiita IDは必須です' })} />
+                <Input data-testid="register-qiitaId" id="qiitaId" {...register('qiitaId', { required: 'Qiita IDは必須です' })} />
                 {errors.qiitaId && (
-                  <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                  <Text role="alert" aria-live="polite" data-testid="register-error-qiitaId" style={{ color: 'red' }} textStyle="sm">
                     {errors.qiitaId.message}
                   </Text>
                 )}
               </Field.Root>
               <Field.Root>
                 <Field.Label htmlFor="xId">X ID</Field.Label>
-                <Input id="xId" {...register('xId', { required: 'X IDは必須です' })} />
+                <Input data-testid="register-xId" id="xId" {...register('xId', { required: 'X IDは必須です' })} />
                 {errors.xId && (
-                  <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+                  <Text role="alert" aria-live="polite" data-testid="register-error-xId" style={{ color: 'red' }} textStyle="sm">
                     {errors.xId.message}
                   </Text>
                 )}
@@ -234,7 +235,7 @@ export const Register = memo(() => {
             </Stack>
           </Card.Body>
           <Card.Footer>
-            <Button type="submit" mt={4} colorScheme="blue" w={'100%'}>
+            <Button type="submit" mt={4} colorScheme="blue" w={'100%'} data-testid="register-submit-button">
               登録
             </Button>
           </Card.Footer>

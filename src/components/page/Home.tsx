@@ -1,5 +1,5 @@
-import { Box, Button, Card, Field, Input, Text } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Box, Button, Card, Field, Input, Link, Text } from '@chakra-ui/react';
+
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ export const Home = () => {
     handleSubmit,
     setError,
     clearErrors,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<HomeFormInput>();
 
   // フォーム送信時の処理
@@ -23,21 +23,12 @@ export const Home = () => {
     clearErrors('root');
 
     try {
-      if (isSubmitSuccessful) {
-        navigate(`/cards/${data.userId}`);
-      }
+      navigate(`/cards/${data.userId}`);
     } catch (error) {
       // サーバーエラーが発生した場合、フォームのルートにエラーメッセージを設定
       setError('root', { type: 'server', message: 'サーバーエラーが発生しました。再度お試しください。' });
     }
   };
-
-  // 登録成功時にホームへ遷移
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      navigate('/');
-    }
-  }, [isSubmitSuccessful]);
 
   return (
     <>
@@ -56,19 +47,25 @@ export const Home = () => {
                   required: 'ユーザーIDは必須です',
                 })}
                 placeholder="ユーザーIDを入力してください"
+                data-testid="home-userId"
               />
             </Field.Root>
             {errors.userId && (
-              <Text role="alert" aria-live="polite" data-testid="error-submit" style={{ color: 'red' }} textStyle="sm">
+              <Text role="alert" aria-live="polite" data-testid="home-error-userId" style={{ color: 'red' }} textStyle="sm">
                 {errors.userId.message}
               </Text>
             )}
 
-            <Button mt={4} colorScheme="blue" type="submit">
+            <Button mt={4} colorScheme="blue" type="submit" data-testid="home-submit-button">
               名刺を検索
             </Button>
           </Card.Body>
         </Card.Root>
+        <Box textAlign="center">
+          <Link href="/cards/register" data-testid="home-register-button">
+            新規登録
+          </Link>
+        </Box>
       </Box>
     </>
   );
