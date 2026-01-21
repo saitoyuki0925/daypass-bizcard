@@ -22,7 +22,7 @@ type UserFormInput = {
   userId: string;
   name: string;
   description: string;
-  skills: skillOption[];
+  skills: string[];
   githubId: string;
   qiitaId: string;
   xId: string;
@@ -50,12 +50,12 @@ export const Register = memo(() => {
 
   // 登録ボタンクリックハンドラ
   const onSubmitRegistration = useCallback(async (user: UserFormInput) => {
-    const { userId, name, description, githubId, qiitaId, xId } = user;
+    const { userId, name, description, githubId, qiitaId, xId, skills } = user;
 
     // userSkillsテーブルにスキル情報を追加する。skillsは配列なのでmapで変換。複数行登録に対応するためにinsertUserSkillsを使用
-    const userSkills = skills.map((skill) => ({
+    const userSkills = skills.map((skillId) => ({
       user_id: userId,
-      skill_id: Number(skill.id), // skillOptionのvalueはstringなのでnumberに変換
+      skill_id: Number(skillId), // skillOptionのvalueはstringなのでnumberに変換
     }));
 
     await insertUser({
@@ -68,6 +68,7 @@ export const Register = memo(() => {
       created_at: new Date().toISOString(),
     });
 
+    console.log(userSkills);
     await insertUserSkills(userSkills);
   }, []);
 
@@ -77,7 +78,11 @@ export const Register = memo(() => {
     setError,
     clearErrors,
     formState: { errors, isSubmitSuccessful },
-  } = useForm<UserFormInput>();
+  } = useForm<UserFormInput>({
+    defaultValues: {
+      skills: [], // multiple の場合は空配列スタートが安全
+    },
+  });
 
   const onSubmit = async (data: UserFormInput) => {
     // 送信前にサーバーエラー表示をクリア
@@ -94,7 +99,7 @@ export const Register = memo(() => {
     };
 
     try {
-      onSubmitRegistration(user);
+      await onSubmitRegistration(user);
     } catch (error) {
       // サーバーエラーが発生した場合、フォームのルートにエラーメッセージを設定
       setError('root', { type: 'server', message: 'サーバーエラーが発生しました。再度お試しください。' });

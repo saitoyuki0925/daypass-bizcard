@@ -25,6 +25,12 @@ export const insertUser = async (user: User) => {
   return { data, error };
 };
 
+// users テーブルの該当する行を削除
+export const deleteUserById = async (userId: string) => {
+  const { error } = await supabase.from('users').delete().eq('user_id', userId);
+  return { error };
+};
+
 //skill_userテーブルの特定のuser_idの情報を取得する関数
 export const getUserSkills = async (userId: string): Promise<{ data: { user_id: string; skill_id: number }[] | null; error: any }> => {
   const { data, error } = await supabase.from('user_skill').select('*').eq('user_id', userId);
