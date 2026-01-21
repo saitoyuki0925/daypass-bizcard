@@ -7,7 +7,6 @@ on:
 
 jobs:
   delete-users:
-  cleanup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
