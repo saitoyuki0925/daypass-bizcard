@@ -10,8 +10,6 @@ import { useNavigate } from 'react-router-dom';
  *
  ****/
 
-type skillOption = { value: string; label: string };
-
 type SkillsOptions = {
   value: string;
   label: string;
