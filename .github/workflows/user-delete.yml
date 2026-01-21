@@ -20,8 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - run: node -v
+      - run: npx ts-node -v
+
       - name: Run batch to delete users
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: npx ts-node-esm ./batch/index.ts
+        run: npx ts-node --esm ./batch/index.ts
