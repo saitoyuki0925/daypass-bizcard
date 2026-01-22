@@ -23,6 +23,15 @@ jobs:
       - run: node -v
       - run: npx ts-node -v
 
+      - name: Diagnose tsconfig
+        run: |
+          pwd
+          ls -la
+          echo "----- tsconfig.json -----"
+          cat tsconfig.json
+          echo "----- tsc noEmit -----"
+          npx tsc -p tsconfig.json --noEmit
+
       - name: Run batch to delete users
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
